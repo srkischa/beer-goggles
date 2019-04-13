@@ -1,0 +1,11 @@
+.card {
+  min-width: 100px;
+}
+
+.beer-card-image {
+  height: 180px;
+  width: 256px;
+  display: "block";
+  padding: 10px;
+  margin: 0 auto;
+}

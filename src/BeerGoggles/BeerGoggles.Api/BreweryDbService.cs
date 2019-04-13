@@ -22,5 +22,12 @@ namespace BeerGoggles.Api
             var result = await _httpClient.GetAsync("beers" + keyQueryString);
             return await result.Content.ReadAsStringAsync();
         }
+
+        public async Task<string> GetData(string url)
+        {
+            var keyQueryString = $"/?key={_breweryDbSettings.ApiKey}";
+            var result = await _httpClient.GetAsync(url + keyQueryString);
+            return await result.Content.ReadAsStringAsync();
+        }
     }
 }

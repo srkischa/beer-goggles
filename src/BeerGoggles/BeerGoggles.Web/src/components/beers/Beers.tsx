@@ -1,6 +1,8 @@
 import React, { FC, useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import axios from "../../axios";
+import BeerCard from "./BeerCard";
+import "./Beers.css";
 
 const Beers: FC<RouteComponentProps> = ({ history }) => {
   const [beers, setBeers] = useState<any[]>([]);
@@ -12,18 +14,28 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
     });
   }, []);
 
-  function checkBeerDetails() {
+  function onBeerClickHandler(id: string) {
     history.push({
-      pathname: `/beer/${selectedBeer}`
+      pathname: `/beer/${id}`
     });
   }
 
   return (
-    <div>
-      <div>Beers</div>
-      {beers.map(beer => (
-        <div>{beer.name}</div>
-      ))}
+    <div className="beer-cards-container">
+      <div className="card-deck">
+        {beers
+          .filter(b => b.labels)
+          .map(beer => (
+            <BeerCard
+              key={beer.id}
+              id={beer.id}
+              name={beer.name}
+              description={beer.description}
+              imageUrl={beer.labels.medium}
+              onBeerClick={onBeerClickHandler}
+            />
+          ))}
+      </div>
     </div>
   );
 };
