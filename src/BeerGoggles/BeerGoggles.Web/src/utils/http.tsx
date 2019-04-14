@@ -1,12 +1,8 @@
-type KeyValueObject = {
-  [key: string]: string | undefined;
+type PartialKeyValueObject = {
+  [key: string]: string | number | undefined;
 };
 
-type Partial<T> = { [P in keyof T]?: T[P] };
-
-type PartialKeyValues = Partial<KeyValueObject>;
-
-function toQueryStringParams(obj: KeyValueObject) {
+function toQueryStringParams(obj: PartialKeyValueObject) {
   const l = Object.keys(obj).map(key => {
     if (obj[key] !== undefined) {
       return `${encodeURIComponent(key)}=${encodeURIComponent(obj[
