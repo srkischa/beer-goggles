@@ -21,8 +21,7 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   const [filterFormValue, setFilterFormValue] = useState<FilterFormValue>({
-    name: "",
-    styleId: undefined
+    name: ""
   });
 
   function getBeers(beerQuery: BeerQuery) {
@@ -40,9 +39,16 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   }
 
   useEffect(() => {
-    const { name, styleId } = filterFormValue;
-    getBeers({ sort, order, p: nextPage, name, styleId });
-  }, [sort, order, nextPage, filterFormValue.name, filterFormValue.styleId]);
+    const { name, styleId, isOrganic } = filterFormValue;
+    getBeers({ sort, order, p: nextPage, name, styleId, isOrganic });
+  }, [
+    sort,
+    order,
+    nextPage,
+    filterFormValue.name,
+    filterFormValue.styleId,
+    filterFormValue.isOrganic
+  ]);
 
   function onBeerClickHandler(id: string) {
     history.push({
@@ -65,6 +71,7 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   }
 
   function filterSubmitedHandler(value: FilterFormValue) {
+    console.log(value);
     setFilterFormValue(value);
   }
 

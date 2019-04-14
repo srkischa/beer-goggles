@@ -17,9 +17,14 @@ const Paginator: FC<Paginator> = ({ currentPage, numberOfPages, onClick }) => {
     currentPage,
     numberOfPages - numberedPagesCount + 1
   );
-  const numberRange: number[] = [...Array(numberedPagesCount)].map(
-    (_, i) => i + startPage
-  );
+
+  let numberRange: number[] = [];
+
+  if (numberOfPages < numberedPagesCount) {
+    numberRange = [...Array(numberOfPages)].map((_, i) => i + 1);
+  } else {
+    numberRange = [...Array(numberedPagesCount)].map((_, i) => i + startPage);
+  }
 
   return (
     <Pagination>
