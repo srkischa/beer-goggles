@@ -15,9 +15,9 @@ namespace BeerGoggles.Api.Middleware
 
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
-            var beerUrl = context.Request.Path.Value.Replace(@"/api/", "");
-            var result = await _service.GetData(beerUrl);
-            await context.Response.WriteAsync(result, Encoding.UTF8);
+            var brewerDbBaseUrl = context.Request.Path.Value.Replace(@"/api/", string.Empty);
+            var response = await _service.GetData(brewerDbBaseUrl, context.Request.Query);
+            await context.Response.WriteAsync(response, Encoding.UTF8);
         }
     }
 }

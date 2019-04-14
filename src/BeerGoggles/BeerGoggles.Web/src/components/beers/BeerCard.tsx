@@ -23,7 +23,7 @@ const BeerCard: FC<BeerCard> = ({
       <Card.Img variant="top" src={imageUrl} className="beer-card-image" />
       <Card.Body>
         <Card.Title>{name}</Card.Title>
-        <Card.Text>{description.slice(0, 100)}</Card.Text>
+        <Card.Text>{description.slice(0, 125)}</Card.Text>
         <Button variant="primary" onClick={() => onBeerClick(id)}>
           Check this beer
         </Button>

@@ -1,3 +1,11 @@
 .beer-cards-container {
   padding: 10px 50px;
 }
+
+.table td {
+  text-align: left;
+}
+
+.table tbody tr td {
+  font-size: 12px;
+}
