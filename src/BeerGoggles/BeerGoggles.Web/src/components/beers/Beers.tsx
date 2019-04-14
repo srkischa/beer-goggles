@@ -71,7 +71,6 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   }
 
   function filterSubmitedHandler(value: FilterFormValue) {
-    console.log(value);
     setFilterFormValue(value);
   }
 
@@ -96,13 +95,7 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
               sortDirection={sort}
               onSort={onSortHandler}
             />
-            <TableHeader
-              title="Type"
-              name="type"
-              isSorted={order === "x"}
-              sortDirection={sort}
-              onSort={onSortHandler}
-            />
+            <TableHeader title="Type" isSortable={false} />
             <TableHeader
               title="Description"
               name="description"

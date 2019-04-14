@@ -7,11 +7,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 type TableHeader = {
-  name: string;
+  name?: string;
   title: string;
-  isSorted: boolean;
-  sortDirection: "ASC" | "DESC";
-  onSort: (id: string) => void;
+  isSorted?: boolean;
+  sortDirection?: "ASC" | "DESC";
+  isSortable?: boolean;
+  onSort?: (id: string) => void;
 };
 
 const TableHeader: FC<TableHeader> = ({
@@ -19,15 +20,30 @@ const TableHeader: FC<TableHeader> = ({
   name,
   isSorted,
   sortDirection,
+  isSortable = true,
   onSort
-}) => (
-  <th scope="col" onClick={() => onSort(name)}>
-    {title}
-    <FontAwesomeIcon
-      icon={
-        isSorted ? (sortDirection === "ASC" ? faSortUp : faSortDown) : faSort
-      }
-    />
-  </th>
-);
+}) => {
+  function sortClickHandler() {
+    if (isSortable && name && onSort) {
+      onSort(name);
+    }
+  }
+
+  return (
+    <th scope="col" onClick={sortClickHandler}>
+      {title}
+      {isSortable && (
+        <FontAwesomeIcon
+          icon={
+            isSorted
+              ? sortDirection === "ASC"
+                ? faSortUp
+                : faSortDown
+              : faSort
+          }
+        />
+      )}
+    </th>
+  );
+};
 export default TableHeader;
