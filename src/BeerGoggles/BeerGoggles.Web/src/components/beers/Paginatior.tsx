@@ -8,6 +8,10 @@ type Paginator = {
 };
 
 const Paginator: FC<Paginator> = ({ currentPage, numberOfPages, onClick }) => {
+  if (numberOfPages === 0) {
+    return null;
+  }
+
   const numberedPagesCount = 5;
   const startPage = Math.min(
     currentPage,
@@ -16,6 +20,7 @@ const Paginator: FC<Paginator> = ({ currentPage, numberOfPages, onClick }) => {
   const numberRange: number[] = [...Array(numberedPagesCount)].map(
     (_, i) => i + startPage
   );
+
   return (
     <Pagination>
       <Pagination.First

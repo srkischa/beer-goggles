@@ -4,7 +4,7 @@ type PartialKeyValueObject = {
 
 function toQueryStringParams(obj: PartialKeyValueObject) {
   const l = Object.keys(obj).map(key => {
-    if (obj[key] !== undefined) {
+    if (obj[key] !== undefined && obj[key] !== "") {
       return `${encodeURIComponent(key)}=${encodeURIComponent(obj[
         key
       ] as string)}`;
