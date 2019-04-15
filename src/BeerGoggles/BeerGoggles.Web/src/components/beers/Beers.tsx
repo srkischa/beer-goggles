@@ -2,10 +2,10 @@ import React, { FC, useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import axios from "../../axios";
 import "./Beers.css";
-import TableHeader from "./TableHeader";
 import toQueryStringParams from "./../../utils/http";
 import Paginator from "./Paginatior";
-import FilterForm, { FilterFormValue } from "./FilterForm";
+import FilterForm, { FilterFormValue } from "./filter-form/FilterForm";
+import BeerTable from "./table/Table";
 
 type BeerQuery = {
   order?: string;
@@ -50,13 +50,13 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
     filterFormValue.isOrganic
   ]);
 
-  function onBeerClickHandler(id: string) {
+  function beerClickHandler(id: string) {
     history.push({
       pathname: `/beer/${id}`
     });
   }
 
-  function onSortHandler(columnName: string) {
+  function sortClickHandler(columnName: string) {
     console.log(sort, columnName);
     if (order !== columnName) {
       setOrder(columnName);
@@ -85,46 +85,13 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
         />
       </div>
 
-      <table className="table table-bordered">
-        <thead>
-          <tr>
-            <TableHeader
-              title="Name"
-              name="name"
-              isSorted={order === "name"}
-              sortDirection={sort}
-              onSort={onSortHandler}
-            />
-            <TableHeader title="Type" isSortable={false} />
-            <TableHeader
-              title="Description"
-              name="description"
-              isSorted={order === "description"}
-              sortDirection={sort}
-              onSort={onSortHandler}
-            />
-            <TableHeader
-              title="Is organic"
-              name="isOrganic"
-              isSorted={order === "isOrganic"}
-              sortDirection={sort}
-              onSort={onSortHandler}
-            />
-          </tr>
-        </thead>
-        <tbody>
-          {beers
-            .filter(b => b.labels)
-            .map(beer => (
-              <tr key={beer.id} onClick={() => onBeerClickHandler(beer.id)}>
-                <td>{beer.name}</td>
-                <td>{beer.style ? beer.style.name : ""}</td>
-                <td>{beer.description ? beer.description.slice(0, 80) : ""}</td>
-                <td>{beer.isOrganic === "Y" ? "Yes" : "No"}</td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+      <BeerTable
+        order={order}
+        sortDirection={sort}
+        beers={beers}
+        onBeerClick={beerClickHandler}
+        onSort={sortClickHandler}
+      />
     </div>
   );
 };

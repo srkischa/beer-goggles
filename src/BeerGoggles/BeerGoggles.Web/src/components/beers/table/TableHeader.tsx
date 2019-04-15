@@ -6,7 +6,7 @@ import {
   faSortDown
 } from "@fortawesome/free-solid-svg-icons";
 
-type TableHeader = {
+type TableHeaderProps = {
   name?: string;
   title: string;
   isSorted?: boolean;
@@ -15,7 +15,7 @@ type TableHeader = {
   onSort?: (id: string) => void;
 };
 
-const TableHeader: FC<TableHeader> = ({
+const TableHeader: FC<TableHeaderProps> = ({
   title,
   name,
   isSorted,
@@ -31,7 +31,7 @@ const TableHeader: FC<TableHeader> = ({
 
   return (
     <th scope="col" onClick={sortClickHandler}>
-      {title}
+      <span className="mr-2">{title}</span>
       {isSortable && (
         <FontAwesomeIcon
           icon={

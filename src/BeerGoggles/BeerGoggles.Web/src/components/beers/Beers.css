@@ -6,6 +6,10 @@
   text-align: left;
 }
 
+.table tbody tr {
+  cursor: pointer;
+}
+
 .table tbody tr td {
   font-size: 12px;
 }

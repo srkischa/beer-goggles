@@ -3,24 +3,22 @@ import { RouteComponentProps } from "react-router-dom";
 import axios from "../../axios";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-// import "./BeerCard.css";
+import "./Beer.css";
 
-interface Identifiable {
+type Identifiable = {
   id: string;
-}
+};
 
 const Beer: FC<RouteComponentProps<Identifiable>> = ({ history, match }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
 
-  console.log("m", match);
-
   useEffect(() => {
     axios.get("beer/" + match.params["id"]).then(result => {
       const { name, description, labels } = result.data.data;
       setDescription(description);
-      setImageUrl(labels.large);
+      setImageUrl(labels.medium);
       setName(name);
     });
   }, []);

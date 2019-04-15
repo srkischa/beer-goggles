@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect, MouseEvent, ChangeEvent } from "react";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import axios from "../../axios";
+import axios from "../../../axios";
 import "./FilterForm.css";
 
 export type FilterFormValue = {
