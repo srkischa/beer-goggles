@@ -52,8 +52,6 @@ namespace BeerGoggles.Api
             }
 
             app.UseMiddleware<BreweryDbProxyMiddleware>();
-
-            app.UseMvc();
         }
     }
 }
