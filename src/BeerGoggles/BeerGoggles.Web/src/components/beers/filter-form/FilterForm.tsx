@@ -1,6 +1,4 @@
 import React, { FC, useState, useEffect, MouseEvent, ChangeEvent } from "react";
-import ToggleButton from "react-bootstrap/ToggleButton";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import axios from "../../../axios";
 import "./FilterForm.css";
 
@@ -10,15 +8,15 @@ export type FilterFormValue = {
   isOrganic?: string;
 };
 
-type FilterForm = {
+type FilterFormProps = {
   onChange: (value: FilterFormValue) => void;
 };
 
-type Style = { id: number; name: string };
+type BeerStyle = { id: number; name: string };
 
-const FilterForm: FC<FilterForm> = ({ onChange }) => {
+const FilterForm: FC<FilterFormProps> = ({ onChange }) => {
   const [showFilter, setShowFilter] = useState(false);
-  const [styles, setStyles] = useState<Style[]>([]);
+  const [styles, setStyles] = useState<BeerStyle[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string | undefined>();
   const [name, setName] = useState("");
   const [filterOnlyOrganic, setFilterOnlyOrganic] = useState(false);
@@ -27,7 +25,7 @@ const FilterForm: FC<FilterForm> = ({ onChange }) => {
     axios.get("styles").then(result => {
       const { data } = result.data;
       setStyles(
-        data.map((style: Style) => {
+        data.map((style: BeerStyle) => {
           return { id: style.id, name: style.name };
         })
       );

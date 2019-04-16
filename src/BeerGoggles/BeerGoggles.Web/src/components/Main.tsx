@@ -5,7 +5,6 @@ import Beer from "./beer/Beer";
 
 class Main extends React.Component {
   render() {
-    document.title = "Stitching tool";
     return (
       <React.Fragment>
         <Switch>
