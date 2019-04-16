@@ -27,7 +27,7 @@ const Paginator: FC<Paginator> = ({ currentPage, numberOfPages, onClick }) => {
   }
 
   return (
-    <Pagination>
+    <Pagination style={{ justifyContent: "flex-end" }}>
       <Pagination.First
         onClick={() => onClick(1)}
         disabled={currentPage === 1}

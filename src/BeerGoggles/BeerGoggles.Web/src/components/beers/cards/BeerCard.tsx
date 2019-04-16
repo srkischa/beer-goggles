@@ -1,9 +1,7 @@
 import React, { FC } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
 import "./BeerCard.css";
 
-type BeerCard = {
+type BeerCardProps = {
   name: string;
   description: string;
   imageUrl: string;
@@ -11,24 +9,22 @@ type BeerCard = {
   onBeerClick: (id: string) => void;
 };
 
-const BeerCard: FC<BeerCard> = ({
+const BeerCard: FC<BeerCardProps> = ({
   name,
   id,
   description = "",
   imageUrl,
   onBeerClick
 }) => (
-  <div className="col-3 col-md-3">
-    <Card>
-      <Card.Img variant="top" src={imageUrl} className="beer-card-image" />
-      <Card.Body>
-        <Card.Title>{name}</Card.Title>
-        <Card.Text>{description.slice(0, 125)}</Card.Text>
-        <Button variant="primary" onClick={() => onBeerClick(id)}>
-          Check this beer
-        </Button>
-      </Card.Body>
-    </Card>
+  <div onClick={() => onBeerClick(id)} className="card-container">
+    <div>
+      <img src={imageUrl} className="beer-card-image" />
+    </div>
+    <div>
+      <span className="beer-name">{name}</span>
+      <hr />
+      <span className="beer-description">{description.slice(0, 125)}</span>
+    </div>
   </div>
 );
 export default BeerCard;

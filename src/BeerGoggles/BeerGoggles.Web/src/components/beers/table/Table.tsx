@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import TableHeader from "./TableHeader";
+import "./Table.css";
 
 type BeerTableProps = {
   order: string;
@@ -17,7 +18,7 @@ const BeerTable: FC<BeerTableProps> = ({
   onBeerClick
 }) => {
   return (
-    <table className="table table-bordered">
+    <table className="table table-bordered beer-table">
       <thead>
         <tr>
           <TableHeader
@@ -45,14 +46,16 @@ const BeerTable: FC<BeerTableProps> = ({
         </tr>
       </thead>
       <tbody>
-        {beers.map(beer => (
-          <tr key={beer.id} onClick={() => onBeerClick(beer.id)}>
-            <td>{beer.name}</td>
-            <td>{beer.style ? beer.style.name : ""}</td>
-            <td>{beer.description ? beer.description.slice(0, 80) : ""}</td>
-            <td>{beer.isOrganic === "Y" ? "Yes" : "No"}</td>
-          </tr>
-        ))}
+        {beers
+          // .filter(beer => beer.labels)
+          .map(beer => (
+            <tr key={beer.id} onClick={() => onBeerClick(beer.id)}>
+              <td>{beer.name}</td>
+              <td>{beer.style ? beer.style.name : ""}</td>
+              <td>{beer.description ? beer.description.slice(0, 80) : ""}</td>
+              <td>{beer.isOrganic === "Y" ? "Yes" : "No"}</td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

@@ -1,11 +1,28 @@
-.card {
-  min-width: 100px;
+.card-container {
+  width: 250px;
+  border: 1px solid #f3f3f3;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  margin: 30px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.card-container:hover {
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.12), 0 4px 6px 0 rgba(0, 0, 0, 0.08);
 }
 
 .beer-card-image {
-  height: 180px;
-  width: 256px;
+  width: 100%;
   display: "block";
   padding: 10px;
   margin: 0 auto;
+}
+
+.beer-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.beer-description {
+  font-size: 0.8rem;
 }

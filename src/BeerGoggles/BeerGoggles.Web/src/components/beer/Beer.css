@@ -3,3 +3,48 @@
   height: 250px;
   margin: 0 auto;
 }
+
+.item-container {
+  display: flex;
+  border: 1px solid #f3f3f3;
+  background-color: white;
+  padding: 5px;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.image-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.item-image {
+  height: 300px;
+  width: 300px;
+}
+
+.desc-container {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 5px 20px;
+}
+
+.item-name {
+  font-size: 1.7rem;
+}
+
+.item-type {
+  font-size: 1.1rem;
+}
+
+.item-description {
+  font-size: 0.8rem;
+  padding-bottom: 20px;
+}
+
+.back-button {
+  width: 7rem;
+  margin-left: auto;
+  margin-top: auto;
+}

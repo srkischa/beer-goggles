@@ -6,6 +6,7 @@ export type FilterFormValue = {
   name?: string;
   styleId?: string;
   isOrganic?: string;
+  hasLabels?: string;
 };
 
 type FilterFormProps = {
@@ -20,6 +21,7 @@ const FilterForm: FC<FilterFormProps> = ({ onChange }) => {
   const [selectedStyle, setSelectedStyle] = useState<string | undefined>();
   const [name, setName] = useState("");
   const [filterOnlyOrganic, setFilterOnlyOrganic] = useState(false);
+  const [filterOnlyWithLabels, setFilterOnlyWithLabels] = useState(true);
 
   useEffect(() => {
     axios.get("styles").then(result => {
@@ -44,12 +46,17 @@ const FilterForm: FC<FilterFormProps> = ({ onChange }) => {
     setFilterOnlyOrganic(!filterOnlyOrganic);
   };
 
+  const toggleLabelsHandler = () => {
+    setFilterOnlyWithLabels(!filterOnlyWithLabels);
+  };
+
   const submitFilterHandler = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     onChange({
       name: name.length > 0 ? `*${name}*` : "",
       styleId: selectedStyle === "-1" ? undefined : selectedStyle,
-      isOrganic: filterOnlyOrganic ? "Y" : undefined
+      isOrganic: filterOnlyOrganic ? "Y" : undefined,
+      hasLabels: filterOnlyWithLabels ? "Y" : undefined
     });
   };
 
@@ -57,7 +64,7 @@ const FilterForm: FC<FilterFormProps> = ({ onChange }) => {
     event.preventDefault();
     setName("");
     setSelectedStyle("-1");
-    onChange({ name: "" });
+    onChange({ name: "", hasLabels: "Y" });
   };
 
   const collapseToggleClickHandler = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -119,6 +126,20 @@ const FilterForm: FC<FilterFormProps> = ({ onChange }) => {
                 />
                 <label className="form-check-label" htmlFor="isOrganic">
                   Show Only Organic
+                </label>
+              </div>
+            </div>
+            <div className="col-auto">
+              <div className="form-check mt-1 ml-2">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  checked={filterOnlyWithLabels}
+                  onChange={toggleLabelsHandler}
+                  id="hasLabels"
+                />
+                <label className="form-check-label" htmlFor="hasLabels">
+                  Show Only With Labels
                 </label>
               </div>
             </div>

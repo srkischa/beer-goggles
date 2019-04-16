@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import axios from "../../axios";
-import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "./Beer.css";
+import image from "../../assets/images/no-image-available.png";
 
 type Identifiable = {
   id: string;
@@ -13,13 +13,15 @@ const Beer: FC<RouteComponentProps<Identifiable>> = ({ history, match }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios.get("beer/" + match.params["id"]).then(result => {
       const { name, description, labels } = result.data.data;
       setDescription(description);
-      setImageUrl(labels.medium);
+      setImageUrl(labels ? labels.medium : image);
       setName(name);
+      setIsLoading(false);
     });
   }, []);
 
@@ -29,19 +31,33 @@ const Beer: FC<RouteComponentProps<Identifiable>> = ({ history, match }) => {
     });
   }
 
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+
   return (
     <div className="row">
       <div className="col-8 col-md-6" style={{ margin: "0 auto" }}>
-        <Card>
-          <Card.Img variant="top" src={imageUrl} className="beer-card-image" />
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>{description}</Card.Text>
-            <Button variant="primary" onClick={onBackClickHandler}>
+        <div className="item-container">
+          <div className="image-wrapper">
+            <img src={imageUrl} className="item-image" />
+          </div>
+          <div className="desc-container">
+            <span className="item-name">{name}</span>
+            <span className="item-type">Ovde ide Type</span>
+            <hr />
+            <span className="item-description">
+              {description || "No description provided"}
+            </span>
+            <Button
+              variant="primary"
+              className="back-button"
+              onClick={onBackClickHandler}
+            >
               Back
             </Button>
-          </Card.Body>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

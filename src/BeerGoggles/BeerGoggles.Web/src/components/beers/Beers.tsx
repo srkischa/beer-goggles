@@ -6,6 +6,7 @@ import toQueryStringParams from "./../../utils/http";
 import Paginator from "./Paginatior";
 import FilterForm, { FilterFormValue } from "./filter-form/FilterForm";
 import BeerTable from "./table/Table";
+import BeerCards from "./cards/BeerCards";
 
 type BeerQuery = {
   order?: string;
@@ -21,10 +22,14 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [nextPage, setNextPage] = useState(1);
   const [filterFormValue, setFilterFormValue] = useState<FilterFormValue>({
-    name: ""
+    name: "",
+    hasLabels: "Y"
   });
+  const [isLoading, setIsLoading] = useState(true);
+  const [showTableView, setShowTableView] = useState(false);
 
   function getBeers(beerQuery: BeerQuery) {
+    setIsLoading(true);
     let queryParams = "";
     if (beerQuery) {
       queryParams = toQueryStringParams(beerQuery);
@@ -35,19 +40,21 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
       setBeers(data || []);
       setCurrentPage(currentPage);
       setNumberOfPages(numberOfPages || 0);
+      setIsLoading(false);
     });
   }
 
   useEffect(() => {
-    const { name, styleId, isOrganic } = filterFormValue;
-    getBeers({ sort, order, p: nextPage, name, styleId, isOrganic });
+    const { name, styleId, isOrganic, hasLabels } = filterFormValue;
+    getBeers({ sort, order, p: nextPage, name, styleId, isOrganic, hasLabels });
   }, [
     sort,
     order,
     nextPage,
     filterFormValue.name,
     filterFormValue.styleId,
-    filterFormValue.isOrganic
+    filterFormValue.isOrganic,
+    filterFormValue.hasLabels
   ]);
 
   function beerClickHandler(id: string) {
@@ -57,7 +64,6 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
   }
 
   function sortClickHandler(columnName: string) {
-    console.log(sort, columnName);
     if (order !== columnName) {
       setOrder(columnName);
       setSort("ASC");
@@ -74,24 +80,39 @@ const Beers: FC<RouteComponentProps> = ({ history }) => {
     setFilterFormValue(value);
   }
 
+  function toggleViewHandler() {
+    setShowTableView(!showTableView);
+  }
+
   return (
     <div className="beer-cards-container">
       <FilterForm onChange={filterSubmitedHandler} />
-      <div className="float-right">
+      <div>
+        <button className="btn" onClick={toggleViewHandler}>
+          {showTableView ? "Show cards view" : "Show table view"}
+        </button>
         <Paginator
           currentPage={currentPage}
           numberOfPages={numberOfPages}
           onClick={paginateNextHandler}
         />
       </div>
-
-      <BeerTable
-        order={order}
-        sortDirection={sort}
-        beers={beers}
-        onBeerClick={beerClickHandler}
-        onSort={sortClickHandler}
-      />
+      {isLoading && <div>Loading ...</div>}
+      {!isLoading && beers.length > 0 ? (
+        !showTableView ? (
+          <BeerCards beers={beers} onBeerClick={beerClickHandler} />
+        ) : (
+          <BeerTable
+            order={order}
+            sortDirection={sort}
+            beers={beers}
+            onBeerClick={beerClickHandler}
+            onSort={sortClickHandler}
+          />
+        )
+      ) : (
+        <div>No data</div>
+      )}
     </div>
   );
 };
