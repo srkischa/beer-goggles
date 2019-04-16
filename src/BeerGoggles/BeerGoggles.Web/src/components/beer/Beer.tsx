@@ -44,7 +44,7 @@ const Beer: FC<RouteComponentProps<Identifiable>> = ({ history, match }) => {
           </div>
           <div className="desc-container">
             <span className="item-name">{name}</span>
-            <span className="item-type">Ovde ide Type</span>
+            <span className="item-type">Beer type should be here</span>
             <hr />
             <span className="item-description">
               {description || "No description provided"}
